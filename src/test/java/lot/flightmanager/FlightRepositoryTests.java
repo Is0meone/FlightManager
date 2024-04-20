@@ -1,15 +1,14 @@
 package lot.flightmanager;
 
-import lot.flightmanager.Module.Flight;
-import lot.flightmanager.Module.FlightRepository;
-import lot.flightmanager.Module.Plane;
+import lot.flightmanager.Models.Flight;
+import lot.flightmanager.Models.FlightRepository;
+import lot.flightmanager.Models.Plane;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.annotation.Rollback;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;

@@ -1,7 +1,7 @@
-package lot.flightmanager.Module;
+package lot.flightmanager.Models;
 
 import jakarta.persistence.*;
-import java.sql.Time;
+
 import java.time.LocalDate;
 
 @Entity

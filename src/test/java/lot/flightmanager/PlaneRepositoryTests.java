@@ -1,9 +1,7 @@
 package lot.flightmanager;
 
-import lot.flightmanager.Module.Plane;
-import lot.flightmanager.Module.PlaneRepository;
-import org.apache.catalina.User;
-import org.junit.jupiter.api.Assertions;
+import lot.flightmanager.Models.Plane;
+import lot.flightmanager.Models.PlaneRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

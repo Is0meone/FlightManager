@@ -1,8 +1,8 @@
 package lot.flightmanager;
 
-import lot.flightmanager.Module.Passenger;
-import lot.flightmanager.Module.PassengerRepository;
-import lot.flightmanager.Module.Status;
+import lot.flightmanager.Models.Passenger;
+import lot.flightmanager.Models.PassengerRepository;
+import lot.flightmanager.Models.Status;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

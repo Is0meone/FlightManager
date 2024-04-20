@@ -1,4 +1,4 @@
-package lot.flightmanager.Module;
+package lot.flightmanager.Models;
 
 import org.springframework.data.repository.CrudRepository;
 
