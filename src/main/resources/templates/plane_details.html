@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plane Details</title>
+</head>
+<body>
+<h1>Plane Details</h1>
+<div>
+    <p>ID: <span th:text="${plane.id_Plane}"></span></p>
+    <p>Model: <span th:text="${plane.model}"></span></p>
+    <p>Capacity: <span th:text="${plane.capacity}"></span></p>
+    <p>Producer: <span th:text="${plane.producer}"></span></p>
+</div>
+<a href="/planes">Back to list</a>
+</body>
+</html>

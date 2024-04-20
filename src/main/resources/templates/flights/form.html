@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj nowy lot</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Dodaj nowy lot</h1>
+    <form th:action="@{/flights/add}" th:object="${flight}" method="post">
+        <div class="form-group">
+            <label for="plane">Samolot:</label>
+            <select id="plane" th:field="*{plane}" required>
+                <option value="">Wybierz samolot</option>
+                <option th:each="plane : ${planes}" th:value="${plane.id_Plane}" th:text="${plane.model + ' (' + plane.producer + ')'}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="destination">Miejsce docelowe:</label>
+            <input type="text" id="destination" th:field="*{destination}" required>
+        </div>
+        <div class="form-group">
+            <label for="origin">Miejsce startu:</label>
+            <input type="text" id="origin" th:field="*{origin}" required>
+        </div>
+        <div class="form-group">
+            <label for="freeSeats">Liczba wolnych miejsc:</label>
+            <input type="number" id="freeSeats" th:field="*{free_Seats}" required>
+        </div>
+        <div class="form-group">
+            <label for="date">Data lotu:</label>
+            <input type="date" id="date" th:field="*{date}" required>
+        </div>
+        <div class="form-group">
+            <label for="time">Czas lotu:</label>
+            <input type="time" id="time" th:field="*{time}" required>
+        </div>
+        <button type="submit">Dodaj lot</button>
+    </form>
+</div>
+</body>
+</html>

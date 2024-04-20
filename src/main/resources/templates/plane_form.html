@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dodaj Samolot</title>
+  <link href="css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <h1>Dodaj Samolot</h1>
+  <form th:action="@{/planes/add}" th:object="${plane}" method="post">
+    <label for="model">Model:</label>
+    <input type="text" id="model" th:field="*{model}" required>
+
+    <label for="producer">Producent:</label>
+    <input type="text" id="producer" th:field="*{producer}" required>
+
+    <label for="capacity">Pojemność:</label>
+    <input type="number" id="capacity" th:field="*{capacity}" required min="1">
+
+    <button type="submit">Zapisz Samolot</button>
+  </form>
+</div>
+
+</body>
+</html>

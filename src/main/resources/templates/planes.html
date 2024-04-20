@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Planes</title>
+</head>
+<body>
+<h1>Planes</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Model</th>
+        <th>Capacity</th>
+        <th>Producer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="plane : ${listPlanes}">
+        <td><a th:href="@{'/planes/' + ${plane.id_Plane}}">[[${plane.id_Plane}]]</a></td>
+        <td th:text="${plane.model}">Model</td>
+        <td th:text="${plane.capacity}">Capacity</td>
+        <td th:text="${plane.producer}">Producer</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
