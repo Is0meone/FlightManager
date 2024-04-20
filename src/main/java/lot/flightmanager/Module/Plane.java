@@ -46,4 +46,14 @@ public class Plane {
     public void setProducer(String producer) {
         Producer = producer;
     }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "Id_Plane=" + Id_Plane +
+                ", Capacity=" + Capacity +
+                ", Model='" + Model + '\'' +
+                ", Producer='" + Producer + '\'' +
+                '}';
+    }
 }
