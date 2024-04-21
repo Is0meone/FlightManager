@@ -11,7 +11,7 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id_Flight;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Id_Plane", referencedColumnName = "Id_Plane")
     private Plane plane;
 
