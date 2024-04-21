@@ -19,7 +19,7 @@ public class PlaneController {
     public String showPlaneList(Model model){
         List<Plane> listPlanes = service.listAll();
         model.addAttribute("listPlanes",listPlanes);
-        return "planes";
+        return "planes/planes";
     }
     @GetMapping("planes/{id}")
     public String showPlaneDetails(@PathVariable("id") Integer id, Model model) {
@@ -28,14 +28,14 @@ public class PlaneController {
         if (plane != null) {
             model.addAttribute("plane", plane);
             System.out.println(plane);
-            return "plane_details";
+            return "planes/plane_details";
         }
         return "redirect:/planes"; // Redirect to the list if plane with given ID does not exist
     }
     @GetMapping("planes/newPlane")
     public String showNewForm(Model model){
         model.addAttribute("plane",new Plane());
-        return "plane_form";
+        return "planes/plane_form";
     }
     @PostMapping("/planes/add")
     public String addPlane(@ModelAttribute("plane") Plane plane) {
