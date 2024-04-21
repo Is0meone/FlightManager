@@ -150,12 +150,55 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-success" onclick="location.href='/planes/newPlane'">Add New Flight</button>
+        <button type="button" class="btn btn-success" id="addFlightButton">Add New Flight</button>
         <button type="button" class="btn btn-danger" onclick="location.href='/planes/delete'">Delete Flight</button>
       </div>
     </div>
   </section>
-
+  <div class="modal fade" id="newFlightModal" tabindex="-1" aria-labelledby="newFlightModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newFlightModalLabel">Dodaj nowy lot</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form th:action="@{/flights/add}" th:object="${flight}" method="post">
+            <div class="form-group">
+              <label for="plane">Samolot:</label>
+              <select id="plane" th:field="*{plane}" required>
+                <option value="">Wybierz samolot</option>
+                <option th:each="plane : ${planes}" th:value="${plane.id_Plane}" th:text="${plane.model + ' (' + plane.producer + ')'}"></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="destination">Miejsce docelowe:</label>
+              <input type="text" id="destination" th:field="*{destination}" required>
+            </div>
+            <div class="form-group">
+              <label for="origin">Miejsce startu:</label>
+              <input type="text" id="origin" th:field="*{origin}" required>
+            </div>
+            <div class="form-group">
+              <label for="freeSeats">Liczba wolnych miejsc:</label>
+              <input type="number" id="freeSeats" th:field="*{free_Seats}" required>
+            </div>
+            <div class="form-group">
+              <label for="date">Data lotu:</label>
+              <input type="date" id="date" th:field="*{date}" required>
+            </div>
+            <div class="form-group">
+              <label for="time">Czas lotu:</label>
+              <input type="time" id="time" th:field="*{time}" required>
+            </div>
+            <button type="submit" class="btn btn-success">Dodaj lot</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
@@ -212,6 +255,8 @@
 </footer><!-- End Footer -->
 <!-- End Footer -->
 
+
+
 <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <div id="preloader"></div>
@@ -223,10 +268,20 @@
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
 <script src="assets/vendor/php-email-form/validate.js"></script>
+<script>
+  var addFlightBtn = document.getElementById('addFlightButton');
+  var addFlightModal = new bootstrap.Modal(document.getElementById('addFlightModal'));
 
+  addFlightBtn.addEventListener('click', function() {
+    addFlightModal.show();
+  });
+</script>
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
 </body>
+
+
+
 
 </html>
