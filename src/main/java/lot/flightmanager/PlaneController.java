@@ -35,11 +35,11 @@ public class PlaneController {
     @GetMapping("planes/newPlane")
     public String showNewForm(Model model){
         model.addAttribute("plane",new Plane());
-        return "planes/plane_form";
+        return "planes/addPlane";
     }
     @PostMapping("/planes/add")
     public String addPlane(@ModelAttribute("plane") Plane plane) {
-        // Zapisuje samolot za pomocą serwisu
+
         service.save(plane);
         return "redirect:/planes";
     }

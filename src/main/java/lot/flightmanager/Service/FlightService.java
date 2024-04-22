@@ -1,6 +1,7 @@
 package lot.flightmanager.Service;
 
 import lot.flightmanager.Models.Flight;
+import lot.flightmanager.Models.FlightManifestRepository;
 import lot.flightmanager.Models.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import java.util.Optional;
 public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
+    @Autowired
+    private FlightManifestRepository flightManifestRepository;
 
     public List<Flight> listAllFlights() {
         return flightRepository.findAllWithPlanes();
@@ -27,6 +30,7 @@ public class FlightService {
         return flight.orElse(null);
     }
     public void deleteFlight(Integer id) {
+        flightManifestRepository.deleteByIdFlight(id);
         flightRepository.deleteById(id);
     }
     public List<Flight> findFlightsByCriteria(String origin, String destination, LocalDate date) {
@@ -35,5 +39,8 @@ public class FlightService {
         } else {
             return flightRepository.findAll();
         }
+    }
+    public Integer findMinimumId(){
+        return flightRepository.findMinimumId();
     }
 }

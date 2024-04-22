@@ -57,7 +57,7 @@
                 <li><a href="index" class="active">Home</a></li>
                 <li><a href="flights">Flights</a></li>
                 <li><a href="">Planes</a></li>
-                <li><a href="pricing.html">Passengers</a></li>
+                <li><a href="passengers">Passengers</a></li>
                 <li><a class="get-a-quote" href="https://github.com/Is0meone/FlightManager.git">See on github</a></li>
             </ul>
         </nav><!-- .navbar -->
@@ -108,13 +108,13 @@
                         <td><a th:href="@{'/planes/' + ${plane.id_Plane}}">[[${plane.id_Plane}]]</a></td>
                         <td th:text="${plane.model}">Model</td>
                         <td th:text="${plane.capacity}">Capacity</td>
-                        <td th:text="${plane.producer}">Producer</td>
+                        <td th:text="${plane.producer}">Manufacture</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="button-group">
-                <button type="button" class="btn custom-btn-add">Add New Plane</button>
+                <button type="button" class="btn custom-btn-add" onclick="location.href='/planes/newPlane'">Add New Plane</button>
                 <button type="button" class="btn custom-btn-delete">Delete Plane</button>
             </div>
         </div>

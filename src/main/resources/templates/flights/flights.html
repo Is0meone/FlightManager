@@ -57,7 +57,7 @@
         <li><a href="index" class="active">Home</a></li>
         <li><a href="flights">Flights</a></li>
         <li><a href="planes">Planes</a></li>
-        <li><a href="pricing">Passengers</a></li>
+        <li><a href="passengers">Passengers</a></li>
         <li><a class="get-a-quote" href="https://github.com/Is0meone/FlightManager.git">See on github</a></li>
       </ul>
     </nav><!-- .navbar -->
@@ -83,7 +83,7 @@
     <nav>
       <div class="container">
         <ol>
-          <li><a href="../index.html">Home</a></li>
+          <li><a href="">Home</a></li>
           <li>Flights summary</li>
         </ol>
       </div>
@@ -92,7 +92,7 @@
 
   <section class="sample-page">
     <div class="container" data-aos="fade-up">
-      <h1>Planes</h1>
+      <h1>Flights</h1>
       <form action="#" th:action="@{/flights}" method="get" class="form-filter">
         <div class="form-group">
           <label for="origin">Origin:</label>
@@ -109,8 +109,8 @@
         <button type="submit" class="btn btn-primary">Filter</button>
       </form>
 
-
-      <table class="table table-hover">
+      <form th:action="@{/flights/delete}" method="post">
+      <table class="table table-hover styled-table">
         <thead class="table-dark">
         <tr>
           <th>ID</th>
@@ -120,6 +120,7 @@
           <th>Origin</th>
           <th>Free Seats</th>
           <th>Plane</th>
+          <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -140,8 +141,9 @@
               </div>
             </div>
           </td>
-
-
+          <td>
+            <input type="checkbox" name="selectedFlights" th:value="${flight.id_Flight}" />
+          </td>
 
         </tr>
         <tr th:if="${#lists.isEmpty(listFlights)}">
@@ -149,10 +151,11 @@
         </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-success" onclick="location.href='/planes/newPlane'">Add New Flight</button>
-        <button type="button" class="btn btn-danger" onclick="location.href='/planes/delete'">Delete Flight</button>
+      <div class="button-group">
+        <button type="button" class="btn custom-btn-add" onclick="location.href='/flights/newFlight'">Add New Flight</button>
+        <button type="submit" class="btn custom-btn-delete">Delete Selected Flights</button>
       </div>
+      </form>
     </div>
   </section>
 

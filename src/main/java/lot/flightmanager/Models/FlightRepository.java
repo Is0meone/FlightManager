@@ -9,10 +9,11 @@ import java.util.List;
 
 public interface FlightRepository extends CrudRepository<Flight, Integer> {
     List<Flight> findAll();
-
     @Query("SELECT f FROM Flight f JOIN FETCH f.plane")
     List<Flight> findAllWithPlanes();
     @Query(value = "SELECT * FROM flight WHERE origin = IFNULL(:origin, origin) AND destination = IFNULL(:destination, destination) AND date = IFNULL(:date, date)", nativeQuery = true)
     List<Flight> findByOriginAndDestinationAndDate(@Param("origin") String origin, @Param("destination") String destination, @Param("date") LocalDate date);
 
+    @Query("SELECT MIN(f.Id_Flight) FROM Flight f")
+    Integer findMinimumId();
 }

@@ -17,6 +17,8 @@ public class Passenger {
 
     @Column(nullable = false)
     private Integer Phone;
+    @Column
+    private String homeAirport;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -54,6 +56,13 @@ public class Passenger {
 
     public void setPhone(Integer phone) {
         this.Phone = phone;
+    }
+    public String getHomeAirport() {
+        return homeAirport;
+    }
+
+    public void setHomeAirport(String homeAirport) {
+        this.homeAirport = homeAirport;
     }
 
     public Status getStatus() {

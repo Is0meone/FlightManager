@@ -50,12 +50,21 @@ public class FlightController {
         model.addAttribute("flight", new Flight());
         List<Plane> planeList = planeService.listAll();
         model.addAttribute("planes",planeList);
-        return "flights/form";
+        return "flights/addFlight";
     }
 
     @PostMapping("/flights/add")
     public String addFlight(@ModelAttribute("flight") Flight flight) {
+        int freeSeats = flight.getPlane().getCapacity();
+        flight.setFree_Seats(freeSeats);
         service.saveFlight(flight);
-        return "index";
+        return "redirect:/flights";
+    }
+    @PostMapping("flights/delete")
+    public String deleteFlight(@RequestParam("selectedFlights") List<Integer> flightsToDel){
+        for(Integer flightId : flightsToDel) {
+            service.deleteFlight(flightId);
+        }
+        return "redirect:/flights";
     }
 }

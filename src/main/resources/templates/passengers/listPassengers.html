@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Passenger Summary</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="../index.html" class="logo d-flex align-items-center">
+            <h1>Logis</h1>
+        </a>
+        <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+        <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="redirect:/flights">Flights</a></li>
+                <li><a href="redirect:/planes">Planes</a></li>
+                <li><a href="redirect:/passengers" class="active">Passengers</a></li>
+                <li><a class="get-a-quote" href="https://github.com/Is0meone/FlightManager.git">See on github</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main id="main">
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center" style="background-image: url('assets/img/planeHomePage.png');">
+            <div class="container position-relative">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <h2>Passenger Summary</h2>
+                        <p>Review all registered passengers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <div class="container">
+                <ol>
+                    <li><a href="">Home</a></li>
+                    <li>Passenger Summary</li>
+                </ol>
+            </div>
+        </nav>
+    </div>
+
+    <section class="sample-page">
+        <div class="container" data-aos="fade-up">
+            <h1 th:text="'Passengers from Flight ' + ${flight.id_Flight} + ': ' + ${flight.origin} + ' - ' + ${flight.destination}">Passengers from Flight</h1>
+            <h2 th:text="'Free Seats - ' + ${flight.free_Seats}">Free Seats</h2>
+            <form action="#" th:action="@{/passengers}" method="get" class="form-filter">
+                <div class="form-group">
+                    <label for="id_Flight">Flight Id:</label>
+                    <select id="id_Flight" name="id" class="form-control">
+                        <option th:each="f : ${allFlights}" th:value="${f.id_Flight}" th:text="${f.id_Flight} + ' - ' + ${f.origin} + ' to ' + ${f.destination}" th:selected="${f.id_Flight == flight.id_Flight}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Change flight</button>
+            </form>
+
+            <form th:action="@{/removePassengersFromFlight}" method="post">
+                <input type="hidden" name="flightId" th:value="${flight.id_Flight}" />
+            <table class="table table-hover styled-table">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Home Airport</th>
+                    <th>Status</th>
+                    <th>Check to Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="passenger : ${listPassengers}">
+                    <td th:text="${passenger.id_Passenger}"></td>
+                    <td th:text="${passenger.name}"></td>
+                    <td th:text="${passenger.surname}"></td>
+                    <td th:text="${passenger.phone}"></td>
+                    <td th:text="${passenger.homeAirport}"></td>
+                    <td th:text="${passenger.status}"></td>
+                    <td style="text-align: center; vertical-align: middle;"><input type="checkbox" th:value="${passenger.id_Passenger}" name="selectedPassengers"/></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(listPassengers)}">
+                    <td colspan="6">No passengers found</td>
+                </tr>
+                </tbody>
+            </table>
+                <button type="submit" class="btn btn-danger">Remove Selected Passengers</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer id="footer" class="footer">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-5 col-md-12 footer-info">
+                <a href="../index.html" class="logo d-flex align-items-center">
+                    <span>Logis</span>
+                </a>
+                <div class="social-links d-flex mt-4">
+                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="instagram"><i the="bi bi-instagram"></i></a>
+                    <a href="#" class="linkedin"><i the="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-6 footer-links">
+                <h4>Personal details</h4>
+                <ul>
+                    Stanislaw <br>
+                    Kwiatkowski<br>
+                    Warszawa <br><br>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                <h4>Contact Me</h4>
+                <p>
+                    <strong>Phone:</strong> +48 734 198 813<br>
+                    <strong>Email:</strong> stkwiat.cyb@gmail.com<br>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Logis</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/logis-bootstrap-logistics-website-template/ -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+    </div>
+</footer>
+
+<a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div id="preloader"></div>
+
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
