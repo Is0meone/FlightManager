@@ -122,6 +122,7 @@
                     <p>Do you want to add a new passenger to this specific flight or to the database?</p>
                     <form id="addPassengerForm" th:action="@{/passengers/newPassenger}" method="post">
                         <input type="hidden" name="flightId" th:value="${flight.id_Flight}" />
+                        <input type="hidden" id="freeSeats" th:value="${flight.free_Seats}" />
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="addOption" id="addToFlight" value="flight" checked>
                             <label class="form-check-label" for="addToFlight">
@@ -201,6 +202,21 @@
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="assets/vendor/aos/aos.js"></script>
 <script src="assets/js/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addPassengerForm = document.getElementById('addPassengerForm');
+        const freeSeats = parseInt(document.getElementById('freeSeats').value); // Ensure you have an input or a hidden field with id='freeSeats' storing the number of free seats
+
+        addPassengerForm.addEventListener('submit', function (event) {
+            const addToFlightRadio = document.getElementById('addToFlight');
+
+            if (addToFlightRadio.checked && freeSeats <= 0) {
+                event.preventDefault(); // Prevent form submission
+                alert("Cannot add new passengers as there are no free seats available on this flight.");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

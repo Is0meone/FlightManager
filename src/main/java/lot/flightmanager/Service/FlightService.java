@@ -3,6 +3,7 @@ package lot.flightmanager.Service;
 import lot.flightmanager.Models.Flight;
 import lot.flightmanager.Models.FlightManifestRepository;
 import lot.flightmanager.Models.FlightRepository;
+import lot.flightmanager.Models.Passenger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class FlightService {
     private FlightRepository flightRepository;
     @Autowired
     private FlightManifestRepository flightManifestRepository;
+    @Autowired PassengerService passengerService;
 
     public List<Flight> listAllFlights() {
         return flightRepository.findAllWithPlanes();
@@ -42,5 +44,18 @@ public class FlightService {
     }
     public Integer findMinimumId(){
         return flightRepository.findMinimumId();
+    }
+
+    public void updateFlight(Flight updatedFlight) {
+        if (updatedFlight.getId_Flight() != null) {
+                Integer freeseats = flightRepository.findById(updatedFlight.getId_Flight()).get().getFree_Seats(); //If we want to change amount of free seats, we have to remove passengers
+                updatedFlight.setFree_Seats(freeseats);
+                flightRepository.save(updatedFlight);
+        } else {
+            throw new IllegalArgumentException("Flight ID must not be null for updates.");
+        }
+    }
+    public Integer soldTickets(Integer idFlight){ //That is very bad solution but no time :c
+        return passengerService.listFromFlight(idFlight).size();
     }
 }

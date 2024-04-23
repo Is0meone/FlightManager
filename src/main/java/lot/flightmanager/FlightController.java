@@ -67,4 +67,34 @@ public class FlightController {
         }
         return "redirect:/flights";
     }
+    @GetMapping("/flights/modify")
+    public String showModifyFlightForm(@RequestParam("id") Integer id, Model model) {
+        Flight flight = service.getFlightById(id);
+        List<Plane> planeList = planeService.listAll();
+        Integer soldTicket = service.soldTickets(id);
+        System.out.println("Sold tickets "+soldTicket);
+        if (flight == null) {
+            return "redirect:/flights"; // Redirect to the flight list if no flight is found
+        }
+        model.addAttribute("flight", flight);
+        model.addAttribute("planes",planeList);
+        model.addAttribute("idFlight", id);
+        model.addAttribute("soldTickets",soldTicket);
+        return "flights/modifyFlight";
+    }
+
+    // Method to handle the submission of the form
+    @PostMapping("/flights/update")
+    public String updateFlight(@ModelAttribute("flight") Flight flight, @RequestParam("idFlight") Integer idFlight,Model model) {
+        System.out.println(flight.getPlane().toString());
+        flight.setId_Flight(idFlight);
+
+        if(flight.getDate()==null) {
+            flight.setDate(service.getFlightById(idFlight).getDate()); //for some reason it is hard to pass date by html
+        }
+
+        service.updateFlight(flight);
+
+        return "redirect:/flights"; // Redirect back to the flights list
+    }
 }
