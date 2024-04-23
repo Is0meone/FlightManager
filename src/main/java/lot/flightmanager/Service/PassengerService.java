@@ -1,9 +1,6 @@
 package lot.flightmanager.Service;
 
-import lot.flightmanager.Models.FlightManifest;
-import lot.flightmanager.Models.FlightManifestRepository;
-import lot.flightmanager.Models.Passenger;
-import lot.flightmanager.Models.PassengerRepository;
+import lot.flightmanager.Models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +27,17 @@ public class PassengerService {
     }
     public void removePassengersFromFlight(List<Integer> passengerList, Integer flightId){
         flightManifestRepository.removePassengersFromFlight(passengerList,flightId);
+    }
+    public Passenger savePassenger(Passenger passenger){
+        Passenger savedPassenger = passengerRepository.save(passenger);
+        return savedPassenger; // Zakładając, że Passenger ma metodę getId()
+    }
+    public void addPassengerToFlight(Passenger passenger, Flight flight){
+        FlightManifest flightManifest = new FlightManifest();
+        flightManifest.setPassenger(passenger);
+        flightManifest.setFlight(flight);
+
+        flightManifestRepository.save(flightManifest);
+
     }
 }

@@ -53,7 +53,7 @@ public class FlightController {
         return "flights/addFlight";
     }
 
-    @PostMapping("/flights/add")
+    @PostMapping("/flights/add") //TODO: Zmienic mapping zeby mial rece i nogi
     public String addFlight(@ModelAttribute("flight") Flight flight) {
         int freeSeats = flight.getPlane().getCapacity();
         flight.setFree_Seats(freeSeats);

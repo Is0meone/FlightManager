@@ -1,6 +1,7 @@
 package lot.flightmanager;
 
 import lot.flightmanager.Models.Flight;
+import lot.flightmanager.Models.FlightManifest;
 import lot.flightmanager.Models.Passenger;
 import lot.flightmanager.Service.FlightService;
 import lot.flightmanager.Service.PassengerService;
@@ -24,6 +25,7 @@ public class PassengerController {
     @Autowired
     FlightService flightService;
 
+
     @ModelAttribute("passengerCount")
     public long populatePassengerCount() {
         System.out.println(passengerService.countPassengers());
@@ -39,12 +41,39 @@ public class PassengerController {
         model.addAttribute("allFlights",flightService.listAllFlights());
         return "passengers/listPassengers";
     }
-    @PostMapping("/removePassengersFromFlight")
-    public String removePassengersFromFlight(@RequestParam("selectedPassengers") List<Integer> selectedPassengers,@RequestParam("flightId") Integer flightId, RedirectAttributes redirectAttributes){
+    @PostMapping("passengers/removePassengersFromFlight")
+    public String removePassengersFromFlight(@RequestParam("selectedPassengers") List<Integer> selectedPassengers,
+                                             @RequestParam("flightId") Integer flightId){
         Flight flight = flightService.getFlightById(flightId);
-        flight.setFree_Seats(flight.getFree_Seats()-selectedPassengers.size());
+        flight.setFree_Seats(flight.getFree_Seats()+selectedPassengers.size());
         passengerService.removePassengersFromFlight(selectedPassengers,flightId);
+        return "redirect:/passengers?id=" + flightId;
+    }
+    @PostMapping("/passengers/newPassenger")
+    public String showNewForm(@RequestParam(name = "addOption") String addOption,
+                               @RequestParam(name = "flightId", required = false) Integer flightId,
+                               Model model) {
+        model.addAttribute("passenger",new Passenger());
+        model.addAttribute("choosenOption",addOption);
+        model.addAttribute("forwardedId",flightId);
+
+        return "passengers/addPassenger";
+    }
+    @PostMapping("/passengers/newPassenger/add") //TODO: Zmienic mapping zeby mial rece i nogi
+    public String addPassenger(@ModelAttribute("passenger") Passenger passenger,
+                               @RequestParam("option") String option,
+                               @RequestParam("flightId") Integer flightId) {
+        passengerService.savePassenger(passenger);
+
+        if(option.equals("flight")){
+            Flight flight = flightService.getFlightById(flightId);
+            passengerService.addPassengerToFlight(passenger,flight);
+            flight.setFree_Seats(flight.getFree_Seats()-1);
+            flightService.saveFlight(flight);
+            return "redirect:/passengers?id=" + flightId;
+        }
+        System.out.println(passenger.toString());
+
         return "redirect:/passengers";
     }
-
 }

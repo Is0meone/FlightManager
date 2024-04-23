@@ -125,7 +125,7 @@
         </thead>
         <tbody>
         <tr th:each="flight : ${listFlights}">
-          <td th:text="${flight.id_Flight}">ID</td>
+          <td><a th:href="@{/passengers(id=${flight.id_Flight})}" th:text="${flight.id_Flight}">ID</a></td>
           <td th:text="${#temporals.format(flight.date, 'yyyy-MM-dd')}">Date</td>
           <td th:text="${#temporals.format(flight.time, 'HH:mm')}">Time</td>
           <td th:text="${flight.destination}">Destination</td>
