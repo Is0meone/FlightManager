@@ -30,10 +30,10 @@
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a href="index">Home</a></li>
-                <li><a href="flights">Flights</a></li>
-                <li><a href="planes">Planes</a></li>
-                <li><a href="passengers" class="active">Passengers</a></li>
+                <li><a href="/index">Home</a></li>
+                <li><a href="/flights">Flights</a></li>
+                <li><a href="/planes">Planes</a></li>
+                <li><a href="/passengers" class="active">Passengers</a></li>
                 <li><a class="get-a-quote" href="https://github.com/Is0meone/FlightManager.git">See on GitHub</a></li>
             </ul>
         </nav>
@@ -96,35 +96,45 @@
                             <option value="GOLD">GOLD</option>
                         </select>
                     </div>
-
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary" style="background: #4e66bb; border: none;">Update Passenger</button>
                     </div>
                 </form>
+
                 <h3>Associated Flights</h3>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Flight ID</th>
-                        <th>Origin</th>
-                        <th>Destination</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="flight : ${flights}">
-                        <td th:text="${flight.id_Flight}"></td>
-                        <td th:text="${flight.origin}"></td>
-                        <td th:text="${flight.destination}"></td>
-                        <td th:text="${#temporals.format(flight.date, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${#temporals.format(flight.time, 'HH:mm')}"></td>
-                    </tr>
-                    <tr th:if="${#lists.isEmpty(flights)}">
-                        <td colspan="5">No associated flights found</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <form th:action="@{/passengers/updateFlightAssignments}" method="post">
+                    <input type="hidden" name="passengerId" th:value="${passenger.id_Passenger}" />
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Flight ID</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Remove from Flight</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="flight : ${flights}">
+                            <td th:text="${flight.id_Flight}"></td>
+                            <td th:text="${flight.origin}"></td>
+                            <td th:text="${flight.destination}"></td>
+                            <td th:text="${#temporals.format(flight.date, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#temporals.format(flight.time, 'HH:mm')}"></td>
+                            <td><input type="checkbox" name="flightsToRemove" th:value="${flight.id_Flight}" /></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <label>Add to Flight:</label>
+                        <select name="flightToAdd" class="form-control">
+                            <option value="">Select Flight</option>
+                            <option th:each="flight : ${allFlights}" th:value="${flight.id_Flight}" th:text="${flight.id_Flight} + ' - ' + ${flight.origin} + ' to ' + ${flight.destination}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Flight Assignments</button>
+                </form>
             </div>
         </div>
     </section>

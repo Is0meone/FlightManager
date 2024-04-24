@@ -24,4 +24,8 @@ public interface FlightManifestRepository extends CrudRepository<FlightManifest,
     void deleteByIdFlight(@Param("idFlight") Integer idFlight);
     @Query(value = "SELECT * FROM passenger_manifest WHERE id_passenger = :idPassenger", nativeQuery = true)
     List<FlightManifest> findByIdPassenger(Integer idPassenger);
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM passenger_manifest WHERE id_flight  IN :iDsFlight AND id_passenger =:passengerId", nativeQuery = true)
+    void removePassengerFromFlights(@Param("passengerId") Integer passenger, @Param("iDsFlight") List<Integer>  flightId);
 }

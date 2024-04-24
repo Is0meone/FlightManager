@@ -92,9 +92,12 @@ public class PassengerController {
         }
         List<FlightManifest> list = passengerService.findPassengersFlights(id);
         List<Flight> flightList = new ArrayList<>();
+        List<Flight> allFlights = flightService.listAllFlights();
         for (FlightManifest i: list){
             flightList.add(i.getFlight());
         }
+        allFlights.removeAll(flightList);
+        model.addAttribute("allFlights", allFlights);
         model.addAttribute("passenger", passenger);
         model.addAttribute("id_Passenger", id);
         model.addAttribute("flights",flightList);
@@ -108,5 +111,23 @@ public class PassengerController {
 
         return "redirect:/passengers";
     }
+    @PostMapping("/passengers/updateFlightAssignments")
+    public String updateFlightAssignments(@RequestParam("passengerId") Integer passengerId,
+                                          @RequestParam(name = "flightsToRemove", required = false) List<Integer> flightsToRemove,
+                                          @RequestParam(name = "flightToAdd", required = false) Integer flightToAdd) {
 
+        if(flightsToRemove!= null) {
+            passengerService.removePassengerFromFlights(passengerId, flightsToRemove);
+            for(Integer i: flightsToRemove){
+                Flight flight = flightService.getFlightById(i);
+                flight.setFree_Seats(flight.getFree_Seats()+1);
+            }
+        }
+        if (flightToAdd != null) {
+            Flight flight = flightService.getFlightById(flightToAdd);
+            flight.setFree_Seats(flight.getFree_Seats() -1);
+            passengerService.addPassengerToFlight(passengerService.findPassengerById(passengerId), flight);
+        }
+        return "redirect:/passengers/modify?id=" + passengerId;
+    }
 }

@@ -53,4 +53,7 @@ public class PassengerService {
     public List<FlightManifest> findPassengersFlights(Integer idPassenger){
        return flightManifestRepository.findByIdPassenger(idPassenger);
     }
+    public void removePassengerFromFlights(Integer passengerId, List<Integer> flightsToRemove) {
+        flightManifestRepository.removePassengerFromFlights(passengerId,flightsToRemove);
+    }
 }
