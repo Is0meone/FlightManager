@@ -58,4 +58,8 @@ public class FlightService {
     public Integer soldTickets(Integer idFlight){ //That is very bad solution but no time :c
         return passengerService.listFromFlight(idFlight).size();
     }
+
+    public long countFlights() {
+        return flightRepository.count();
+    }
 }

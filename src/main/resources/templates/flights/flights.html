@@ -116,8 +116,8 @@
           <th>ID</th>
           <th>Date</th>
           <th>Time</th>
-          <th>Destination</th>
           <th>Origin</th>
+          <th>Destination</th>
           <th>Free Seats</th>
           <th>Plane</th>
           <th>Remove</th>
@@ -128,8 +128,8 @@
           <td><a th:href="@{/flights/modify(id=${flight.id_Flight})}" th:text="${flight.id_Flight}">ID</a></td>
           <td th:text="${#temporals.format(flight.date, 'yyyy-MM-dd')}">Date</td>
           <td th:text="${#temporals.format(flight.time, 'HH:mm')}">Time</td>
-          <td th:text="${flight.destination}">Destination</td>
           <td th:text="${flight.origin}">Origin</td>
+          <td th:text="${flight.destination}">Destination</td>
           <td><a th:href="@{/passengers(id=${flight.id_Flight})}" th:text="${flight.free_Seats}">Free Seats</a></td>
           <td>
             <div class="info-tooltip">

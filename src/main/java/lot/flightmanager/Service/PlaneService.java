@@ -22,4 +22,8 @@ public class PlaneService {
     public void save(Plane plane){
         repo.save(plane);
     }
+
+    public long countPlanes() {
+        return repo.count();
+    }
 }
