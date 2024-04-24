@@ -40,8 +40,17 @@ public class PassengerService {
         flightManifestRepository.save(flightManifest);
 
     }
-
     public List<Passenger> findAll() {
         return passengerRepository.findAll();
+    }
+    public Passenger findPassengerById(Integer id) {
+        return passengerRepository.findById(id).orElse(null);
+    }
+
+    public void updatePassenger(Passenger passenger) {
+        passengerRepository.save(passenger);
+    }
+    public List<FlightManifest> findPassengersFlights(Integer idPassenger){
+       return flightManifestRepository.findByIdPassenger(idPassenger);
     }
 }

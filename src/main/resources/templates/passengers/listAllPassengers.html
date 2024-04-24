@@ -83,7 +83,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="passenger : ${allPassengers}">
-                    <td th:text="${passenger.id_Passenger}"></td>
+                    <td><a th:href="@{/passengers/modify(id=${passenger.id_Passenger})}" th:text="${passenger.id_Passenger}"></a></td>
                     <td th:text="${passenger.name}"></td>
                     <td th:text="${passenger.surname}"></td>
                     <td th:text="${passenger.phone}"></td>

@@ -72,5 +72,17 @@ public class Passenger {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "Id_Passenger=" + Id_Passenger +
+                ", Name='" + Name + '\'' +
+                ", Surname='" + Surname + '\'' +
+                ", Phone=" + Phone +
+                ", homeAirport='" + homeAirport + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
 

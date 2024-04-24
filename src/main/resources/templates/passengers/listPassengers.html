@@ -67,7 +67,7 @@
             <h2 th:text="'Free Seats - ' + ${flight.free_Seats}">Free Seats</h2>
             <button type="button" class="btn btn-primary" onclick="window.location.href='/passengers/listAllPassengers';">View All Passengers</button>
 
-            <form action="#" th:action="@{/passengers}" method="get" class="form-filter">
+            <form th:action="@{/passengers}" method="get" class="form-filter">
                 <div class="form-group">
                     <label for="id_Flight">Flight Id:</label>
                     <select id="id_Flight" name="id" class="form-control">
@@ -93,7 +93,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="passenger : ${listPassengers}">
-                    <td th:text="${passenger.id_Passenger}"></td>
+                    <td><a th:href="@{/passengers/modify(id=${passenger.id_Passenger})}" th:text="${passenger.id_Passenger}"></a></td>
                     <td th:text="${passenger.name}"></td>
                     <td th:text="${passenger.surname}"></td>
                     <td th:text="${passenger.phone}"></td>

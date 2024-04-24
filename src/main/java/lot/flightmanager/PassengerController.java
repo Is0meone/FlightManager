@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class PassengerController {
 
         return "passengers/addPassenger";
     }
-    @PostMapping("/passengers/newPassenger/add") //TODO: Zmienic mapping zeby mial rece i nogi
+    @PostMapping("/passengers/newPassenger/add")
     public String addPassenger(@ModelAttribute("passenger") Passenger passenger,
                                @RequestParam("option") String option,
                                @RequestParam("flightId") Integer flightId) {
@@ -82,4 +83,30 @@ public class PassengerController {
         model.addAttribute("allPassengers", passengers);
         return "passengers/listAllPassengers"; // Name of the Thymeleaf template for showing all passengers
     }
+
+    @GetMapping("/passengers/modify")
+    public String showModifyPassengerForm(@RequestParam("id") Integer id, Model model) {
+        Passenger passenger = passengerService.findPassengerById(id);
+        if (passenger == null) {
+            return "redirect:/passengers"; // Redirect to the passenger list if no passenger is found
+        }
+        List<FlightManifest> list = passengerService.findPassengersFlights(id);
+        List<Flight> flightList = new ArrayList<>();
+        for (FlightManifest i: list){
+            flightList.add(i.getFlight());
+        }
+        model.addAttribute("passenger", passenger);
+        model.addAttribute("id_Passenger", id);
+        model.addAttribute("flights",flightList);
+        return "passengers/modifyPassenger"; // Thymeleaf template to modify the passenger
+    }
+
+    @PostMapping("/passengers/update")
+    public String updatePassenger(@ModelAttribute("passenger") Passenger passenger, @RequestParam("idPassenger") Integer passengerId) {
+        passenger.setId_Passenger(passengerId);
+        passengerService.updatePassenger(passenger);
+
+        return "redirect:/passengers";
+    }
+
 }
