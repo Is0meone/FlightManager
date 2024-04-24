@@ -65,6 +65,8 @@
         <div class="container" data-aos="fade-up">
             <h1 th:text="'Passengers from Flight ' + ${flight.id_Flight} + ': ' + ${flight.origin} + ' - ' + ${flight.destination}">Passengers from Flight</h1>
             <h2 th:text="'Free Seats - ' + ${flight.free_Seats}">Free Seats</h2>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='/passengers/listAllPassengers';">View All Passengers</button>
+
             <form action="#" th:action="@{/passengers}" method="get" class="form-filter">
                 <div class="form-group">
                     <label for="id_Flight">Flight Id:</label>

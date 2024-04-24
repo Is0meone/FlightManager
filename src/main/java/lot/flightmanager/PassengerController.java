@@ -76,4 +76,10 @@ public class PassengerController {
 
         return "redirect:/passengers";
     }
+    @GetMapping("/passengers/listAllPassengers")
+    public String allPassengers(Model model) {
+        List<Passenger> passengers = passengerService.findAll(); // Make sure you have a method to find all passengers
+        model.addAttribute("allPassengers", passengers);
+        return "passengers/listAllPassengers"; // Name of the Thymeleaf template for showing all passengers
+    }
 }
